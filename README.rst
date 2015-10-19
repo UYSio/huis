@@ -6,7 +6,7 @@ What is huis?
 
 It'll aspire to be a multi-platform boxen_.
 
-:: _boxen: https://github.com/boxen 
+.. _boxen: https://github.com/boxen 
 
 Get started
 ===========
@@ -34,6 +34,10 @@ What goes inside a huis-* module?
 ===================================
 
 At least one thing: a ``huis.sh`` file. The rest is up to you.
+
+Also, ``huis`` modules are allowed to cross-reference one another. E.g. see this example_.
+
+.. _example: https://github.com/UYSio/huis-prezto/blob/d2ac719fb5d06d7f6113f8178169a8c288746f7c/prezto.sh#L22
 
 Warning
 =======
