@@ -1,9 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Author: Juan Matthys Uys <opyate+huis@gmail.com>
 # Main script for https://github.com/uysio/huis
-# Tested on Ubuntu 14.04 and Mac OSX 10.10.4
+# Tested on:
+#+ Arch Linux
+#+ Ubuntu 14.04
+#+ Mac OSX 10.10.4
 
-import urllib2
+from urllib.request import (
+    urlopen,
+    Request
+)
 import json
 import subprocess
 import os
@@ -58,7 +64,7 @@ def read_usernames():
     support the case where there's a module name clash.
 
     """
-    usernames = raw_input("Github username for huis modules: ")
+    usernames = input("Github username for huis modules: ")
     for sub in usernames.split(','):
         for username in sub.split():
             yield username
@@ -66,10 +72,10 @@ def read_usernames():
 def repos(username):
     endpoint = api('repos', username=username)
     log('GET %s' % endpoint)
-    request = urllib2.Request(
+    request = Request(
             endpoint,
             headers=HEADERS)
-    response = urllib2.urlopen(request).read()
+    response = urlopen(request).read().decode('utf-8')
     data = json.loads(response)
     for datum in data:
         yield datum
@@ -117,7 +123,7 @@ def clone_or_update(username, whitelist='huis-'):
                 try:
                     args = ['git', 'clone','--recursive', repo_clone_url, rel]
                     print(subprocess.check_output(args))
-                except subprocess.CalledProcessError, e:
+                except subprocess.CalledProcessError as e:
                     log('Error cloning: %s' % e.output)
 
 def run_module(module_name, modules_dir):
@@ -130,7 +136,7 @@ def run_module(module_name, modules_dir):
             log('Run module=[%s] in pwd=[%s]' % (module_name, pwd))
             try:
                 print(subprocess.check_output(['./huis.sh']))
-            except subprocess.CalledProcessError, e:
+            except subprocess.CalledProcessError as e:
                 log('Error run module: %s' % e.output)
 
 def run_all_modules(huis_dir):
