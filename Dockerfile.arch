@@ -1,0 +1,9 @@
+FROM dock0/arch
+RUN pacman -Syy && pacman -S --noconfirm python sudo zsh
+RUN useradd -m foo -G wheel && echo "foo:foo" | chpasswd
+RUN sed -i -e 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers
+USER foo
+RUN touch /home/foo/.zshrc
+RUN mkdir /home/foo/.huis
+WORKDIR /home/foo/.huis
+ENTRYPOINT zsh

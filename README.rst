@@ -51,14 +51,10 @@ The easiest way (that comes to mind) to show the side-effects of the script is t
 
 .. code:: bash
 
-  docker build -t $(whoami)/huis .
-  docker run --rm -it -v $(pwd):/opt/huis $(whoami)/huis bash -l
+  docker build -f Dockerfile.arch -t $(whoami)/huis-arch .
+  docker run --rm -it -v $(pwd):/opt/huis $(whoami)/huis-arch
   # inside the container:
-  cd ~
-  mkdir .huis
-  sudo cp -R /opt/huis/* .huis
-  sudo chown -R foo:foo .
-  cd .huis
+  cp /opt/huis/huis.sh .
   ./huis.sh
 
 Test your new setup by refreshing the shell:

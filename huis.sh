@@ -14,6 +14,7 @@ import json
 import subprocess
 import os
 import errno
+import sys
 
 
 API_BASE = 'https://api.github.com'
@@ -64,10 +65,14 @@ def read_usernames():
     support the case where there's a module name clash.
 
     """
-    usernames = input("Github username for huis modules: ")
-    for sub in usernames.split(','):
-        for username in sub.split():
+    if len(sys.argv) > 1:
+        for username in sys.argv[1:]:
             yield username
+    else:
+        usernames = input("Github user or org name for huis modules: ")
+        for sub in usernames.split(','):
+            for username in sub.split():
+                yield username
 
 def repos(username):
     endpoint = api('repos', username=username)
